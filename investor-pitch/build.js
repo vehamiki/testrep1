@@ -652,7 +652,7 @@ async function main() {
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · The ask", "HUF 800M–1bn to build our Röszke plant");
   const ix = 7.0, iw = W - MX - 7.0, ih = 3.25;
-  s.addImage({ data: await photo(ai("plant.jpg", "image60.jpg"), iw, ih), x: ix, y: 1.75, w: iw, h: ih, objectName: "Röszke plant concept image", altText: "Concept visualisation of the planned Röszke plant" });
+  s.addImage({ data: await photo(ai("plant.jpg", "image13.jpg"), iw, ih), x: ix, y: 1.75, w: iw, h: ih, objectName: "Röszke plant concept image", altText: "Concept visualisation of the planned Röszke plant" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: ix + 0.15, y: 1.75 + ih - 0.43, w: 2.75, h: 0.28, rectRadius: 0.05, fill: { color: C.background1, transparency: 15 }, line: { type: "none" }, objectName: "concept label bg" });
   s.addText("Röszke plant · concept visualisation", { x: ix + 0.15, y: 1.75 + ih - 0.43, w: 2.75, h: 0.28, fontSize: 10, color: C.text1, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "concept label" });
   s.addText("HUF 800M–1bn", { x: MX, y: 1.7, w: 6.2, h: 0.95, fontFace: "Cambria", fontSize: 48, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "ask amount" });
@@ -684,8 +684,7 @@ async function main() {
   // ======================= 29. CAPACITY =======================
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · Capacity", "The capacity build-out multiplies output");
-  s.addImage({ data: await photo("image60.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 2.35, objectName: "production hall photo", altText: "Production hall" });
-  s.addImage({ data: await photo("image6.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 4.25, w: 4.6, h: 2.35, objectName: "milling equipment photo", altText: "Milling equipment" });
+  s.addImage({ data: await photo("image6.jpg", 4.6, 4.85), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 4.85, objectName: "milling equipment photo", altText: "Milling equipment" });
   const capa = [
     ["Flour milling", "270", "1,270", "kg / hour", "4.7×", "A third, 1,000 kg/h mill joins the two existing mills"],
     ["Flour blending", "750", "2,550", "kg / hour", "3.4×", "A 550 L high-capacity mixer for Bake-Free"],
