@@ -35,11 +35,14 @@ pres.author = "Miklós Véha";
 pres.company = "Naturtrade Hungary Kft.";
 const C = pres.SchemeColor;
 const W = 13.333, H = 7.5, MX = 0.6;
+const fs = require("fs");
+const AI = path.resolve(__dirname, "../ai");
+const ai = (name, fallback) => (fs.existsSync(path.join(AI, name)) ? path.join(AI, name) : fallback);
 
 // ---------- helpers ----------
 async function photo(file, w, h, opts = {}) {
   const px = Math.round(w * 160), py = Math.round(h * 160);
-  let img = sharp(path.join(MEDIA, file));
+  let img = sharp(path.isAbsolute(file) ? file : path.join(MEDIA, file));
   if (opts.extract) img = img.extract(opts.extract);
   const buf = await img.resize(px, py, { fit: "cover", position: opts.position || "centre" })
     .jpeg({ quality: 80, mozjpeg: true }).toBuffer();
@@ -128,7 +131,7 @@ async function main() {
   // ======================= 1. COVER =======================
   pres.addSection({ title: "Opening" });
   s = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: "Opening" });
-  s.addImage({ data: await photo("image17.jpg", 5.6, 7.5, { position: "centre" }), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "hero millet photo", altText: "Hand holding golden millet grains" });
+  s.addImage({ data: await photo(ai("hero.jpg", "image17.jpg"), 5.6, 7.5, { position: "east" }), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "hero grains image", altText: "Pseudo-cereal grains pouring onto fine flour" });
   s.addText("INVESTOR PRESENTATION  ·  2026", { x: MX + 0.1, y: 1.15, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent3, charSpacing: 4, margin: 0, isTextBox: true, objectName: "cover eyebrow" });
   s.addText("Naturtrade", { x: MX + 0.1, y: 1.6, w: 7, h: 1.2, fontFace: "Cambria", fontSize: 66, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "cover title" });
   s.addText([
@@ -634,7 +637,9 @@ async function main() {
   // ======================= 29. CAPACITY =======================
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · Capacity", "The capacity build-out multiplies output");
-  s.addImage({ data: await photo("image60.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 2.35, objectName: "production hall photo", altText: "New production hall" });
+  s.addImage({ data: await photo(ai("plant.jpg", "image60.jpg"), 4.6, 2.35), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 2.35, objectName: "Röszke plant concept image", altText: "Concept visualisation of the planned Röszke plant" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: W - MX - 4.45, y: 3.72, w: 2.75, h: 0.28, rectRadius: 0.05, fill: { color: C.background1, transparency: 15 }, line: { type: "none" }, objectName: "concept label bg" });
+  s.addText("Röszke plant · concept visualisation", { x: W - MX - 4.45, y: 3.72, w: 2.75, h: 0.28, fontSize: 10, color: C.text1, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "concept label" });
   s.addImage({ data: await photo("image6.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 4.25, w: 4.6, h: 2.35, objectName: "milling equipment photo", altText: "Milling equipment" });
   const capa = [
     ["Flour milling", "270", "1,270", "kg / hour", "4.7×", "A third, 1,000 kg/h mill joins the two existing mills"],
