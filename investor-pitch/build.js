@@ -528,6 +528,28 @@ async function main() {
   s.addText([T("16×", { fontFace: "Cambria", fontSize: 40, bold: true, color: C.accent3, breakLine: true }), T("Oosty, our newest category, is export-led (HUF 5M → 80M)", { fontSize: 14, color: C.text1 })],
     { x: 9.3, y: 4.45, w: 3.25, h: 1.95, margin: 0, valign: "top", isTextBox: true, objectName: "oosty stat" });
 
+  // ======================= GCC BANNER =======================
+  s = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: "Traction" });
+  s.addImage({ data: await photo(ai("ksa.jpg", "image67.jpg"), W, H), x: 0, y: 0, w: W, h: H, objectName: "GCC banner image", altText: "Illustrative Saudi waterfront with palm trees, traditional Najdi architecture and a modern skyline" });
+  s.addText("04  ·  GATEWAY TO THE GCC", { x: MX, y: 0.55, w: 7, h: 0.32, fontSize: 13, bold: true, color: C.accent3, charSpacing: 3, margin: 0, isTextBox: true, objectName: "gcc eyebrow" });
+  s.addText("Saudi Arabia: our gateway to the Gulf", { x: MX, y: 0.95, w: 7.2, h: 1.5, fontFace: "Cambria", fontSize: 40, bold: true, color: C.text1, margin: 0, valign: "top", isTextBox: true, objectName: "gcc title" });
+  s.addText("A state-backed partner today, a six-country market tomorrow.", { x: MX, y: 2.45, w: 6.5, h: 0.4, fontSize: 17, color: C.text1, margin: 0, isTextBox: true, objectName: "gcc subtitle" });
+  const gcc = [
+    ["$127M", "Saudi gluten-free market, 2025"],
+    ["+9.7%", "Saudi gluten-free CAGR to 2034"],
+    ["~10%", "GCC gluten-free growth a year"],
+    ["€1.5M", "Our KSA export potential, 2027"],
+  ];
+  for (let i = 0; i < 4; i++) {
+    const x = MX + i * 2.2, y = 5.35, w = 2.0, h = 1.35;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, rectRadius: 0.12, fill: { color: C.background1, transparency: 8 }, line: { type: "none" },
+      shadow: { type: "outer", color: "0E2B27", opacity: 0.15, blur: 8, offset: 2, angle: 90 }, objectName: "gcc stat card " + (i + 1) });
+    s.addText([T(gcc[i][0], { fontFace: "Cambria", fontSize: 28, bold: true, color: i === 3 ? HEX.warmTxt : C.accent3, breakLine: true }), T(gcc[i][1], { fontSize: 12, color: C.text1 })],
+      { x: x + 0.18, y: y + 0.12, w: w - 0.3, h: h - 0.24, margin: 0, valign: "middle", isTextBox: true, objectName: "gcc stat " + (i + 1) });
+  }
+  s.addText("Sources: IMARC (KSA, 2025–34); TechSci (GCC). Export potential: company plan. Illustrative image.", { x: MX, y: 6.95, w: 8.6, h: 0.28, fontSize: 9, color: C.text1, margin: 0, isTextBox: true, objectName: "gcc sources" });
+  s.addNotes("The Saudi partnership is our foothold in the GCC: a state-backed end buyer, a market growing about 10% a year, and Saudi Arabia is the largest GCC gluten-free market.");
+
   // ======================= 23. KSA =======================
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "Traction" });
   heads(s, "04 · Saudi Arabia", "The Saudi connection");
