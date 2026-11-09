@@ -138,7 +138,7 @@ async function main() {
     T("Four generations of milling.", { breakLine: true }),
     T("One gluten-free, plant-based future.", { color: HEX.warmTxt }),
   ], { x: MX + 0.1, y: 2.95, w: 7, h: 1.1, fontFace: "Cambria", fontSize: 26, color: C.text1, margin: 0, isTextBox: true, objectName: "cover subtitle" });
-  s.addText("Raising HUF 400M+ to build our Röszke production plant and scale exports.", { x: MX + 0.1, y: 4.25, w: 6.4, h: 0.7, fontSize: 16, color: HEX.muteOnDark, margin: 0, isTextBox: true, objectName: "cover ask" });
+  s.addText("Raising HUF 800M–1bn to build our new production plant in Röszke.", { x: MX + 0.1, y: 4.25, w: 6.4, h: 0.7, fontSize: 16, color: HEX.muteOnDark, margin: 0, isTextBox: true, objectName: "cover ask" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: MX + 0.1, y: 5.45, w: 1.15, h: 1.15, rectRadius: 0.1, fill: { color: C.background1 }, line: { type: "none" }, objectName: "logo tile" });
   const lg = await logo("image1.png", 0.95, 0.95);
   s.addImage({ data: lg.data, x: MX + 0.1 + (1.15 - lg.w) / 2, y: 5.45 + (1.15 - lg.h) / 2, w: lg.w, h: lg.h, objectName: "Naturtrade logo", altText: "Naturtrade logo" });
@@ -146,13 +146,13 @@ async function main() {
     T("Miklós Véha", { bold: true, color: C.text1, breakLine: true }),
     T("Founder & CEO, Naturtrade Hungary Kft.", { color: HEX.muteOnDark }),
   ], { x: MX + 1.5, y: 5.6, w: 5, h: 0.85, fontSize: 15, margin: 0, valign: "middle", isTextBox: true, objectName: "presenter" });
-  s.addNotes("Open with the family story: the Véha mill was founded in 1931 in Endrőd. Four generations later we turn premium pseudo-cereal flours into gluten-free, plant-based foods. Today we are raising at least HUF 400M to build our Röszke plant.");
+  s.addNotes("Open with the family story: the Véha mill was founded in 1931 in Endrőd. Four generations later we turn premium pseudo-cereal flours into gluten-free, plant-based foods. Today we are raising HUF 800M–1bn to build our Röszke plant.");
 
   // ======================= 2. AT A GLANCE =======================
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "Opening" });
   heads(s, "The opportunity at a glance", "A heritage miller building a free-from food platform");
   const glance = [
-    ["400M+", "HUF investment sought", "Greenfield plant in Röszke, new production technology, working capital", "FaMoneyBillTrendUp"],
+    ["800M–1bn", "HUF investment sought", "All of it goes into the greenfield plant in Röszke and its production technology", "FaMoneyBillTrendUp"],
     ["1931", "Milling heritage", "Four generations of millers. We make our own premium flour", "FaWheatAwn"],
     ["250+", "B2B partners", "Over 100 products in 10+ categories on Hungarian shelves and in export", "FaStore"],
     ["3–5×", "Target return", "Exit to a financial or strategic investor in 2030", "FaRocket"],
@@ -161,7 +161,7 @@ async function main() {
     const x = MX + i * 3.08, y = 1.95, w = 2.85, h = 3.5;
     card(s, x, y, w, h, HEX.darkCard, "glance card " + (i + 1));
     await badge(s, x + 0.3, y + 0.3, 0.7, glance[i][3], C.accent1, HEX.icon, "glance badge " + (i + 1));
-    s.addText(glance[i][0], { x: x + 0.3, y: y + 1.15, w: w - 0.5, h: 0.8, fontFace: "Cambria", fontSize: 38, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "glance stat " + (i + 1) });
+    s.addText(glance[i][0], { x: x + 0.3, y: y + 1.15, w: w - 0.5, h: 0.8, fontFace: "Cambria", fontSize: 34, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "glance stat " + (i + 1) });
     s.addText(glance[i][1], { x: x + 0.3, y: y + 1.95, w: w - 0.5, h: 0.4, fontSize: 16, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "glance label " + (i + 1) });
     s.addText(glance[i][2], { x: x + 0.3, y: y + 2.38, w: w - 0.5, h: 0.95, fontSize: 13, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "glance desc " + (i + 1) });
   }
@@ -610,36 +610,44 @@ async function main() {
     s.addText(lev[i][3], { x: x + 0.4, y: y + 3.1, w: w - 0.8, h: 1.3, fontSize: 14, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "lever text " + (i + 1) });
   }
 
-  // ======================= 28. USE OF FUNDS =======================
+  // ======================= 28. THE ASK =======================
   pres.addSection({ title: "The investment" });
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
-  heads(s, "06 · The ask", "HUF 400M+ to move into a scalable plant");
-  s.addChart(pres.charts.DOUGHNUT, [{ name: "Use of funds", labels: ["Greenfield plant", "Inventory & marketing", "ÉLIP grant co-financing"], values: [200, 130, 90] }], {
-    x: MX, y: 1.75, w: 4.9, h: 4.6, holeSize: 62, chartColors: [HEX.sage, HEX.gold, HEX.teal], showPercent: false, showValue: true,
-    dataLabelFormatCode: '0"M"', dataLabelColor: HEX.ink, dataLabelFontSize: 13, dataLabelFontFace: "+mn-lt", dataLabelFontBold: true,
-    showLegend: false, objectName: "use of funds chart",
-  });
-  s.addText([T("HUF", { fontSize: 14, color: C.accent5, breakLine: true }), T("420M", { fontFace: "Cambria", fontSize: 30, bold: true, color: C.text1, breakLine: true }), T("indicative plan", { fontSize: 11, color: C.accent5 })],
-    { x: MX + 1.45, y: 3.25, w: 2.0, h: 1.4, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "doughnut centre" });
-  const uof = [
-    [HEX.sage, "Greenfield plant · HUF 200M", "Relocation to Röszke (5 minutes by car): concrete base, road, fence and utilities, plus a rented production hall and offices"],
-    [HEX.gold, "Inventory & marketing · HUF 130M", "Raw and packaging stock, Cupster and Oosty launch campaigns, export trade shows, webshop"],
-    [HEX.teal, "Grant co-financing · HUF 90M", "Own contribution to our winning ÉLIP capacity-expansion grant: new machines and accessories"],
+  heads(s, "06 · The ask", "HUF 800M–1bn to build our Röszke plant");
+  const ix = 7.0, iw = W - MX - 7.0, ih = 3.25;
+  s.addImage({ data: await photo(ai("plant.jpg", "image60.jpg"), iw, ih), x: ix, y: 1.75, w: iw, h: ih, objectName: "Röszke plant concept image", altText: "Concept visualisation of the planned Röszke plant" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: ix + 0.15, y: 1.75 + ih - 0.43, w: 2.75, h: 0.28, rectRadius: 0.05, fill: { color: C.background1, transparency: 15 }, line: { type: "none" }, objectName: "concept label bg" });
+  s.addText("Röszke plant · concept visualisation", { x: ix + 0.15, y: 1.75 + ih - 0.43, w: 2.75, h: 0.28, fontSize: 10, color: C.text1, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "concept label" });
+  s.addText("HUF 800M–1bn", { x: MX, y: 1.7, w: 6.2, h: 0.95, fontFace: "Cambria", fontSize: 48, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "ask amount" });
+  s.addText("Investment sought. 100% goes into the new production plant.", { x: MX, y: 2.65, w: 6.2, h: 0.4, fontSize: 16, color: C.text1, margin: 0, isTextBox: true, objectName: "ask subtitle" });
+  const askItems = [
+    [HEX.sage, "Greenfield plant · ~HUF 700M", "Relocation to Röszke, 5 minutes from today's site: concrete base, road, fence, utilities and the production hall"],
+    [HEX.gold, "Production technology · HUF 100–300M", "New machines and accessories, line installation and commissioning in the new hall"],
   ];
-  for (let i = 0; i < 3; i++) {
-    const y = 1.85 + i * 1.5;
-    s.addShape(pres.shapes.OVAL, { x: 6.0, y: y + 0.08, w: 0.32, h: 0.32, fill: { color: uof[i][0] }, line: { type: "none" }, objectName: "legend dot " + (i + 1) });
-    s.addText([T(uof[i][1], { bold: true, fontSize: 17, color: C.text1, breakLine: true }), T(uof[i][2], { fontSize: 13, color: C.accent5 })],
-      { x: 6.55, y, w: 6.2, h: 1.35, margin: 0, valign: "top", isTextBox: true, objectName: "use of funds item " + (i + 1) });
+  for (let i = 0; i < 2; i++) {
+    const y = 3.35 + i * 0.95;
+    s.addShape(pres.shapes.OVAL, { x: MX, y: y + 0.06, w: 0.3, h: 0.3, fill: { color: askItems[i][0] }, line: { type: "none" }, objectName: "ask dot " + (i + 1) });
+    s.addText([T(askItems[i][1], { bold: true, fontSize: 16, color: C.text1, breakLine: true }), T(askItems[i][2], { fontSize: 13, color: C.accent5 })],
+      { x: MX + 0.5, y, w: 5.75, h: 0.85, margin: 0, valign: "top", isTextBox: true, objectName: "ask item " + (i + 1) });
   }
-  s.addText("Minimum raise HUF 400M. The allocation follows the company business plan.", { x: 6.55, y: 6.4, w: 6.2, h: 0.3, fontSize: 11, italic: true, color: C.accent5, margin: 0, isTextBox: true, objectName: "funds note" });
+  // scale bar 0 → 1bn
+  const bx = MX, bw = 12.13, by = 5.45, bh = 0.42, sc = bw / 1000;
+  s.addShape(pres.shapes.RECTANGLE, { x: bx, y: by, w: 700 * sc, h: bh, fill: { color: HEX.sage }, line: { color: C.background1, width: 1 }, objectName: "bar plant" });
+  s.addShape(pres.shapes.RECTANGLE, { x: bx + 700 * sc, y: by, w: 100 * sc, h: bh, fill: { color: HEX.gold }, line: { color: C.background1, width: 1 }, objectName: "bar technology min" });
+  s.addShape(pres.shapes.RECTANGLE, { x: bx + 800 * sc, y: by, w: 200 * sc, h: bh, fill: { color: HEX.gold, transparency: 55 }, line: { color: HEX.gold, width: 1, dashType: "dash" }, objectName: "bar technology range" });
+  s.addText("Greenfield plant", { x: bx + 0.15, y: by, w: 4, h: bh, fontSize: 13, bold: true, color: C.text1, valign: "middle", margin: 0, isTextBox: true, objectName: "bar label plant" });
+  s.addText("Technology", { x: bx + 700 * sc, y: by, w: 300 * sc, h: bh, fontSize: 13, bold: true, color: C.text1, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "bar label tech" });
+  [[0, "0"], [700, "~700M"], [800, "800M"], [1000, "1bn"]].forEach(([v, t], k) => {
+    const x = bx + v * sc;
+    s.addText(t, { x: k === 3 ? x - 1.0 : (k === 0 ? x : x - 0.5), y: by + bh + 0.06, w: 1.0, h: 0.28, fontSize: 11, color: C.accent5, align: k === 3 ? "right" : (k === 0 ? "left" : "center"), margin: 0, isTextBox: true, objectName: "bar tick " + t });
+  });
+  s.addText("Separately, our winning ÉLIP grant co-finances further capacity expansion.", { x: MX, y: 6.55, w: 12, h: 0.3, fontSize: 11, italic: true, color: C.accent5, margin: 0, isTextBox: true, objectName: "grant note" });
+  s.addNotes("The ask is HUF 800M to 1bn, used entirely for the plant: about HUF 700M for the greenfield site and hall, the balance for production technology.");
 
   // ======================= 29. CAPACITY =======================
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · Capacity", "The capacity build-out multiplies output");
-  s.addImage({ data: await photo(ai("plant.jpg", "image60.jpg"), 4.6, 2.35), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 2.35, objectName: "Röszke plant concept image", altText: "Concept visualisation of the planned Röszke plant" });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: W - MX - 4.45, y: 3.72, w: 2.75, h: 0.28, rectRadius: 0.05, fill: { color: C.background1, transparency: 15 }, line: { type: "none" }, objectName: "concept label bg" });
-  s.addText("Röszke plant · concept visualisation", { x: W - MX - 4.45, y: 3.72, w: 2.75, h: 0.28, fontSize: 10, color: C.text1, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "concept label" });
+  s.addImage({ data: await photo("image60.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 1.75, w: 4.6, h: 2.35, objectName: "production hall photo", altText: "Production hall" });
   s.addImage({ data: await photo("image6.jpg", 4.6, 2.35), x: W - MX - 4.6, y: 4.25, w: 4.6, h: 2.35, objectName: "milling equipment photo", altText: "Milling equipment" });
   const capa = [
     ["Flour milling", "270", "1,270", "kg / hour", "4.7×", "A third, 1,000 kg/h mill joins the two existing mills"],
@@ -734,7 +742,7 @@ async function main() {
     ["FaChartLine", "Growing markets", "Gluten-free +7–10% a year, plant-based meat +15%, GCC demand rising"],
     ["FaLightbulb", "Category creators", "Cupster and Oosty open new shelf space, not just compete for it"],
     ["FaGlobe", "Proven export", "UK, Western Europe, Amazon and a state-backed KSA partnership"],
-    ["FaRocket", "Capital-efficient plan", "HUF 400M+ funds the plant, with a 3–5× target by 2030"],
+    ["FaRocket", "Capital-efficient plan", "HUF 800M–1bn builds the plant, with a 3–5× target by 2030"],
   ];
   for (let i = 0; i < 5; i++) {
     const y = 1.8 + i * 0.97;
@@ -745,7 +753,7 @@ async function main() {
 
   // ======================= 34. THANK YOU =======================
   s = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: "The investment" });
-  s.addImage({ data: await photo("image26.jpg", 5.6, 7.5), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "closing photo", altText: "Cupster instant soup range" });
+  s.addImage({ data: await photo(ai("handshake.jpg", "image26.jpg"), 5.6, 7.5), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "closing celebration image", altText: "Business partners shaking hands while colleagues celebrate" });
   s.addText("THANK YOU", { x: MX + 0.1, y: 1.4, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent3, charSpacing: 4, margin: 0, isTextBox: true, objectName: "closing eyebrow" });
   s.addText("Let's grow it together.", { x: MX + 0.1, y: 1.85, w: 7, h: 1.6, fontFace: "Cambria", fontSize: 48, bold: true, color: C.text1, margin: 0, valign: "top", isTextBox: true, objectName: "closing title" });
   s.addText([
