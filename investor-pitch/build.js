@@ -259,10 +259,9 @@ async function main() {
     ["image3.jpg", "Miklós Véha", "Founder-owner & CEO", "Fourth-generation miller. Leads strategy, export and investor relations."],
     ["image4.jpg", "Prof. Dr. Antal Véha, PhD", "Head of R&D", "Vice-dean, Faculty of Engineering, University of Szeged. 200+ publications."],
     ["image19.jpg", "Orgona Tóthné", "Chief Operating Officer", "Runs production, quality and the plant floor."],
-    ["image2.jpg", "Anita Labát", "Head of Sales", "Domestic retail, wholesale and key accounts."],
   ];
-  for (let i = 0; i < 4; i++) {
-    const x = MX + i * 3.08, w = 2.85;
+  for (let i = 0; i < team.length; i++) {
+    const x = MX + i * 4.15, w = 3.8;
     shadowCard(s, x, 1.85, w, 4.2, "team card " + (i + 1));
     s.addImage({ data: await photo(team[i][0], 2.0, 2.0, { position: "north" }), x: x + (w - 2.0) / 2, y: 2.1, w: 2.0, h: 2.0, rounding: true, objectName: "headshot " + team[i][1], altText: "Portrait of " + team[i][1] });
     s.addText(team[i][1], { x: x + 0.2, y: 4.3, w: w - 0.4, h: 0.45, fontFace: "Cambria", fontSize: 16, bold: true, color: C.text1, align: "center", margin: 0, isTextBox: true, objectName: "team name " + (i + 1) });
