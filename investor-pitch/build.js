@@ -126,6 +126,15 @@ const chartBase = {
   catAxisLineShow: false, valAxisLineShow: false,
 };
 
+async function divider(num, title, teaser, img, section) {
+  const sl = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: section });
+  sl.addImage({ data: await photo(ai(img, "image17.jpg"), 6.8, 7.5), x: W - 6.8, y: 0, w: 6.8, h: 7.5, objectName: "section hero image", altText: title + " section image" });
+  sl.addText(num, { x: MX + 0.1, y: 1.45, w: 5, h: 1.7, fontFace: "Cambria", fontSize: 110, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "section number" });
+  sl.addText(title, { x: MX + 0.1, y: 3.3, w: 5.6, h: 0.95, fontFace: "Cambria", fontSize: 40, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "section title" });
+  sl.addText(teaser, { x: MX + 0.1, y: 4.35, w: 5.3, h: 1.0, fontSize: 17, color: C.accent5, margin: 0, valign: "top", isTextBox: true, objectName: "section teaser" });
+  sl.addText("NATURTRADE  ·  Investor Presentation 2026", { x: MX + 0.1, y: 6.95, w: 5, h: 0.3, fontSize: 9, color: C.accent3, margin: 0, isTextBox: true, objectName: "section footer" });
+}
+
 async function main() {
   let s;
   // ======================= 1. COVER =======================
@@ -180,7 +189,7 @@ async function main() {
     ["Products & moat", "From grain to cup, all made in-house"],
     ["Traction", "Shelves, partners, export and the Saudi deal"],
     ["Competition", "Positioning, SWOT and growth levers"],
-    ["The investment", "Use of funds, capacity, plan and exit"],
+    ["The investment", "The ask, capacity, plan and exit"],
   ];
   for (let i = 0; i < 6; i++) {
     const col = i % 3, row = Math.floor(i / 3);
@@ -193,6 +202,7 @@ async function main() {
 
   // ======================= 4. HERITAGE =======================
   pres.addSection({ title: "Heritage & team" });
+  await divider("01", "Heritage & team", "From the 1931 Véha mill to a 27-person food company", "sec1.jpg", "Heritage & team");
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "Heritage & team" });
   heads(s, "01 · Heritage", "Where tradition meets innovation");
   s.addImage({ data: await photo("image10.jpg", 6.1, 3.6), x: MX, y: 1.8, w: 6.1, h: 3.6, objectName: "Véha mill 1931 photo", altText: "Historic photo of the Véha mill in Endrőd, 1931" });
@@ -264,6 +274,7 @@ async function main() {
 
   // ======================= 8. THE NEED =======================
   pres.addSection({ title: "The market" });
+  await divider("02", "The market", "Why free-from food is moving into the mainstream", "sec2.jpg", "The market");
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "The market" });
   heads(s, "02 · The need", "Millions need a grain-conscious diet");
   s.addText("Share of people on a permanent special diet that affects grain consumption", { x: MX, y: 1.62, w: 8, h: 0.35, fontSize: 14, color: HEX.muteOnDark, margin: 0, isTextBox: true, objectName: "need subtitle" });
@@ -333,6 +344,7 @@ async function main() {
 
   // ======================= 11. VALUE CHAIN =======================
   pres.addSection({ title: "Products & moat" });
+  await divider("03", "Products & moat", "From grain to cup, all made in-house", "sec3.jpg", "Products & moat");
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "Products & moat" });
   heads(s, "03 · Our moat", "From grain to cup, all in-house");
   const chain = [
@@ -437,6 +449,7 @@ async function main() {
 
   // ======================= 19. TRACTION =======================
   pres.addSection({ title: "Traction" });
+  await divider("04", "Traction", "Shelves, partners, export and the Saudi deal", "sec4.jpg", "Traction");
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "Traction" });
   heads(s, "04 · Traction", "On shelves at home, growing abroad");
   const tr = [["100+", "products"], ["250+", "B2B resellers"], ["10+", "product categories"], ["4", "sales channels"]];
@@ -541,6 +554,7 @@ async function main() {
 
   // ======================= 25. COMPETITION =======================
   pres.addSection({ title: "Competition" });
+  await divider("05", "Competition", "Positioning, SWOT and growth levers", "sec5.jpg", "Competition");
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "Competition" });
   heads(s, "05 · Competition", "Only one player owns the whole chain");
   const hdr = (t) => ({ text: t, options: { bold: true, color: C.text1, fill: { color: C.accent4 }, align: "center", valign: "middle", fontSize: 12 } });
@@ -612,6 +626,7 @@ async function main() {
 
   // ======================= 28. THE ASK =======================
   pres.addSection({ title: "The investment" });
+  await divider("06", "The investment", "The ask, capacity, plan and exit", "sec6.jpg", "The investment");
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · The ask", "HUF 800M–1bn to build our Röszke plant");
   const ix = 7.0, iw = W - MX - 7.0, ih = 3.25;
