@@ -11,12 +11,13 @@ const MEDIA = path.resolve(__dirname, "../unz/ppt/media");
 const OUT = process.argv[2] || path.resolve(__dirname, "Naturtrade_Investor_Pitch_2026_EN.pptx");
 
 const HEX = {
-  ink: "14211F", dark: "0E2B27", white: "FFFFFF", mist: "F1F5F4",
-  teal: "12AEBB", gold: "E2A630", green: "2E7D6B", tealLt: "7FD3DA",
-  grey: "5E6E6B", terra: "C8553D", line: "D5DFDD", darkCard: "17403A", muteOnDark: "B9CCC8",
+  ink: "1F2D2B", dark: "2A4A44", white: "FFFFFF", mist: "F5F9F8",
+  teal: "86CFC8", gold: "F6C28B", green: "2F7F72", tealLt: "C4E8E3",
+  grey: "61706D", terra: "EBA99B", line: "DDE6E4", darkCard: "FFFFFF", muteOnDark: "61706D",
+  soft: "E6F4F0", warmTxt: "B5701F", sage: "6FB3A8", icon: "2A4A44",
 };
 const THEME = {
-  name: "Naturtrade Grain",
+  name: "Naturtrade Pastel",
   headFontFace: "Cambria",
   bodyFontFace: "Calibri",
   colors: {
@@ -64,12 +65,12 @@ async function icon(name, color = "FFFFFF") {
   return (iconCache[k] = "image/png;base64," + buf.toString("base64"));
 }
 // circle badge with icon (motif)
-async function badge(slide, x, y, d, iconName, fill = C.accent1, iconColor = "FFFFFF", nm = "badge") {
+async function badge(slide, x, y, d, iconName, fill = C.accent1, iconColor = HEX.icon, nm = "badge") {
   slide.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fill }, line: { type: "none" }, objectName: nm });
   const s = d * 0.5;
   slide.addImage({ data: await icon(iconName, iconColor), x: x + (d - s) / 2, y: y + (d - s) / 2, w: s, h: s, objectName: nm + " icon", altText: iconName.replace("Fa", "") + " icon" });
 }
-function numBadge(slide, x, y, d, n, fill = C.accent1, color = C.background1) {
+function numBadge(slide, x, y, d, n, fill = C.accent1, color = C.text2) {
   slide.addShape(pres.shapes.OVAL, { x, y, w: d, h: d, fill: { color: fill }, line: { type: "none" }, objectName: "number badge " + n });
   slide.addText(String(n), { x, y, w: d, h: d, align: "center", valign: "middle", fontSize: Math.round(d * 30), bold: true, color, margin: 0, isTextBox: true, objectName: "number " + n });
 }
@@ -78,10 +79,10 @@ function heads(slide, eyebrow, title) {
   slide.addText(title, { placeholder: "title" });
 }
 function source(slide, text, dark = false) {
-  slide.addText(text, { x: MX, y: 6.62, w: 9.6, h: 0.3, fontSize: 10, color: dark ? C.accent4 : C.accent5, margin: 0, isTextBox: true, objectName: "source note" });
+  slide.addText(text, { x: MX, y: 6.62, w: 9.6, h: 0.3, fontSize: 10, color: C.accent5, margin: 0, isTextBox: true, objectName: "source note" });
 }
 function card(slide, x, y, w, h, fill = C.background2, nm = "card") {
-  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, rectRadius: 0.12, fill: { color: fill }, line: { type: "none" }, objectName: nm });
+  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, rectRadius: 0.12, fill: { color: fill }, line: fill === HEX.darkCard ? { color: "D3E7E2", width: 0.75 } : { type: "none" }, objectName: nm });
 }
 function shadowCard(slide, x, y, w, h, nm = "card") {
   slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
@@ -105,15 +106,15 @@ pres.defineSlideMaster({
 });
 pres.defineSlideMaster({
   title: "CONTENT_DARK",
-  background: { color: C.text2 },
+  background: { color: HEX.soft },
   objects: [
-    { placeholder: { options: { name: "eyebrow", type: "body", x: MX, y: 0.42, w: 9, h: 0.32, fontSize: 12, bold: true, color: C.accent4, charSpacing: 3, margin: 0 }, text: "" } },
-    { placeholder: { options: { name: "title", type: "title", x: MX, y: 0.74, w: 12.1, h: 0.8, fontFace: "Cambria", fontSize: 34, bold: true, color: C.background1, margin: 0, valign: "top", align: "left" }, text: "" } },
-    { text: { text: "NATURTRADE  ·  Investor Presentation 2026  ·  Confidential", options: { x: MX, y: 7.02, w: 8, h: 0.3, fontSize: 9, color: C.accent4, margin: 0 } } },
+    { placeholder: { options: { name: "eyebrow", type: "body", x: MX, y: 0.42, w: 9, h: 0.32, fontSize: 12, bold: true, color: C.accent3, charSpacing: 3, margin: 0 }, text: "" } },
+    { placeholder: { options: { name: "title", type: "title", x: MX, y: 0.74, w: 12.1, h: 0.8, fontFace: "Cambria", fontSize: 34, bold: true, color: C.text1, margin: 0, valign: "top", align: "left" }, text: "" } },
+    { text: { text: "NATURTRADE  ·  Investor Presentation 2026  ·  Confidential", options: { x: MX, y: 7.02, w: 8, h: 0.3, fontSize: 9, color: C.accent3, margin: 0 } } },
   ],
-  slideNumber: { x: 12.2, y: 7.0, w: 0.55, h: 0.3, fontSize: 9, color: C.accent4, align: "right" },
+  slideNumber: { x: 12.2, y: 7.0, w: 0.55, h: 0.3, fontSize: 9, color: C.accent3, align: "right" },
 });
-pres.defineSlideMaster({ title: "COVER_DARK", background: { color: C.text2 }, objects: [] });
+pres.defineSlideMaster({ title: "COVER_DARK", background: { color: HEX.soft }, objects: [] });
 
 const chartBase = {
   catAxisLabelColor: HEX.grey, valAxisLabelColor: HEX.grey, catAxisLabelFontFace: "+mn-lt", valAxisLabelFontFace: "+mn-lt",
@@ -128,18 +129,18 @@ async function main() {
   pres.addSection({ title: "Opening" });
   s = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: "Opening" });
   s.addImage({ data: await photo("image17.jpg", 5.6, 7.5, { position: "centre" }), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "hero millet photo", altText: "Hand holding golden millet grains" });
-  s.addText("INVESTOR PRESENTATION  ·  2026", { x: MX + 0.1, y: 1.15, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent4, charSpacing: 4, margin: 0, isTextBox: true, objectName: "cover eyebrow" });
-  s.addText("Naturtrade", { x: MX + 0.1, y: 1.6, w: 7, h: 1.2, fontFace: "Cambria", fontSize: 66, bold: true, color: C.background1, margin: 0, isTextBox: true, objectName: "cover title" });
+  s.addText("INVESTOR PRESENTATION  ·  2026", { x: MX + 0.1, y: 1.15, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent3, charSpacing: 4, margin: 0, isTextBox: true, objectName: "cover eyebrow" });
+  s.addText("Naturtrade", { x: MX + 0.1, y: 1.6, w: 7, h: 1.2, fontFace: "Cambria", fontSize: 66, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "cover title" });
   s.addText([
     T("Four generations of milling.", { breakLine: true }),
-    T("One gluten-free, plant-based future.", { color: C.accent2 }),
-  ], { x: MX + 0.1, y: 2.95, w: 7, h: 1.1, fontFace: "Cambria", fontSize: 26, color: C.background1, margin: 0, isTextBox: true, objectName: "cover subtitle" });
+    T("One gluten-free, plant-based future.", { color: HEX.warmTxt }),
+  ], { x: MX + 0.1, y: 2.95, w: 7, h: 1.1, fontFace: "Cambria", fontSize: 26, color: C.text1, margin: 0, isTextBox: true, objectName: "cover subtitle" });
   s.addText("Raising HUF 400M+ to build our Röszke production plant and scale exports.", { x: MX + 0.1, y: 4.25, w: 6.4, h: 0.7, fontSize: 16, color: HEX.muteOnDark, margin: 0, isTextBox: true, objectName: "cover ask" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: MX + 0.1, y: 5.45, w: 1.15, h: 1.15, rectRadius: 0.1, fill: { color: C.background1 }, line: { type: "none" }, objectName: "logo tile" });
   const lg = await logo("image1.png", 0.95, 0.95);
   s.addImage({ data: lg.data, x: MX + 0.1 + (1.15 - lg.w) / 2, y: 5.45 + (1.15 - lg.h) / 2, w: lg.w, h: lg.h, objectName: "Naturtrade logo", altText: "Naturtrade logo" });
   s.addText([
-    T("Miklós Véha", { bold: true, color: C.background1, breakLine: true }),
+    T("Miklós Véha", { bold: true, color: C.text1, breakLine: true }),
     T("Founder & CEO, Naturtrade Hungary Kft.", { color: HEX.muteOnDark }),
   ], { x: MX + 1.5, y: 5.6, w: 5, h: 0.85, fontSize: 15, margin: 0, valign: "middle", isTextBox: true, objectName: "presenter" });
   s.addNotes("Open with the family story: the Véha mill was founded in 1931 in Endrőd. Four generations later we turn premium pseudo-cereal flours into gluten-free, plant-based foods. Today we are raising at least HUF 400M to build our Röszke plant.");
@@ -156,14 +157,14 @@ async function main() {
   for (let i = 0; i < 4; i++) {
     const x = MX + i * 3.08, y = 1.95, w = 2.85, h = 3.5;
     card(s, x, y, w, h, HEX.darkCard, "glance card " + (i + 1));
-    await badge(s, x + 0.3, y + 0.3, 0.7, glance[i][3], C.accent1, "FFFFFF", "glance badge " + (i + 1));
-    s.addText(glance[i][0], { x: x + 0.3, y: y + 1.15, w: w - 0.5, h: 0.8, fontFace: "Cambria", fontSize: 38, bold: true, color: C.accent2, margin: 0, isTextBox: true, objectName: "glance stat " + (i + 1) });
-    s.addText(glance[i][1], { x: x + 0.3, y: y + 1.95, w: w - 0.5, h: 0.4, fontSize: 16, bold: true, color: C.background1, margin: 0, isTextBox: true, objectName: "glance label " + (i + 1) });
+    await badge(s, x + 0.3, y + 0.3, 0.7, glance[i][3], C.accent1, HEX.icon, "glance badge " + (i + 1));
+    s.addText(glance[i][0], { x: x + 0.3, y: y + 1.15, w: w - 0.5, h: 0.8, fontFace: "Cambria", fontSize: 38, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "glance stat " + (i + 1) });
+    s.addText(glance[i][1], { x: x + 0.3, y: y + 1.95, w: w - 0.5, h: 0.4, fontSize: 16, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "glance label " + (i + 1) });
     s.addText(glance[i][2], { x: x + 0.3, y: y + 2.38, w: w - 0.5, h: 0.95, fontSize: 13, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "glance desc " + (i + 1) });
   }
   s.addText([
-    T("Business plan:  ", { color: C.accent4, bold: true }),
-    T("revenue from HUF 732M (2025) to HUF 2.5bn (2030), with EBITDA of about HUF 525M in 2030", { color: C.background1 }),
+    T("Business plan:  ", { color: C.accent3, bold: true }),
+    T("revenue from HUF 732M (2025) to HUF 2.5bn (2030), with EBITDA of about HUF 525M in 2030", { color: C.text1 }),
   ], { x: MX, y: 5.85, w: 12.1, h: 0.5, fontSize: 16, margin: 0, isTextBox: true, objectName: "plan summary" });
   s.addNotes("One slide that answers 'why should I listen'. The amount, the heritage, the traction and the return target.");
 
@@ -234,7 +235,7 @@ async function main() {
   for (let i = 0; i < 2; i++) {
     const y = 1.85 + i * 2.45;
     await badge(s, MX, y, 0.75, mv[i][0], C.accent2, HEX.dark, "purpose badge " + (i + 1));
-    s.addText(mv[i][1], { x: MX + 1.05, y: y + 0.05, w: 6, h: 0.45, fontFace: "Cambria", fontSize: 22, bold: true, color: C.background1, margin: 0, isTextBox: true, objectName: "purpose head " + (i + 1) });
+    s.addText(mv[i][1], { x: MX + 1.05, y: y + 0.05, w: 6, h: 0.45, fontFace: "Cambria", fontSize: 22, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "purpose head " + (i + 1) });
     s.addText(mv[i][2], { x: MX + 1.05, y: y + 0.55, w: 6.3, h: 1.6, fontSize: 15, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "purpose text " + (i + 1) });
   }
 
@@ -268,17 +269,17 @@ async function main() {
     const col = i % 3, row = Math.floor(i / 3);
     const x = MX + col * 2.62, y = 2.15 + row * 1.85, w = 2.42, h = 1.65;
     card(s, x, y, w, h, HEX.darkCard, "need card " + (i + 1));
-    s.addText(need[i][0], { x: x + 0.25, y: y + 0.2, w: w - 0.4, h: 0.7, fontFace: "Cambria", fontSize: 32, bold: true, color: i < 2 ? C.accent2 : C.accent4, margin: 0, isTextBox: true, objectName: "need stat " + (i + 1) });
-    s.addText(need[i][1], { x: x + 0.25, y: y + 0.9, w: w - 0.4, h: 0.6, fontSize: 13, color: C.background1, margin: 0, valign: "top", isTextBox: true, objectName: "need label " + (i + 1) });
+    s.addText(need[i][0], { x: x + 0.25, y: y + 0.2, w: w - 0.4, h: 0.7, fontFace: "Cambria", fontSize: 32, bold: true, color: i < 2 ? HEX.warmTxt : C.accent3, margin: 0, isTextBox: true, objectName: "need stat " + (i + 1) });
+    s.addText(need[i][1], { x: x + 0.25, y: y + 0.9, w: w - 0.4, h: 0.6, fontSize: 13, color: C.text1, margin: 0, valign: "top", isTextBox: true, objectName: "need label " + (i + 1) });
   }
   const nx = 8.75;
   s.addImage({ data: await photo("image21.png", 3.98, 2.3), x: nx, y: 1.62, w: 3.98, h: 2.3, objectName: "bread crumb photo", altText: "Close-up of bread crumb" });
   s.addText([
-    T("85 kg", { fontFace: "Cambria", fontSize: 30, bold: true, color: C.accent2, breakLine: true }),
-    T("flour per person per year in Hungary, against an EU average of 60 kg", { fontSize: 13, color: C.background1, breakLine: true }),
+    T("85 kg", { fontFace: "Cambria", fontSize: 30, bold: true, color: HEX.warmTxt, breakLine: true }),
+    T("flour per person per year in Hungary, against an EU average of 60 kg", { fontSize: 13, color: C.text1, breakLine: true }),
     T(" ", { fontSize: 8, breakLine: true }),
-    T("1.2M t", { fontFace: "Cambria", fontSize: 30, bold: true, color: C.accent2, breakLine: true }),
-    T("of wheat milled every year in Hungary. Gliadin, about 25% of gluten protein, drives the autoimmune response.", { fontSize: 13, color: C.background1 }),
+    T("1.2M t", { fontFace: "Cambria", fontSize: 30, bold: true, color: HEX.warmTxt, breakLine: true }),
+    T("of wheat milled every year in Hungary. Gliadin, about 25% of gluten protein, drives the autoimmune response.", { fontSize: 13, color: C.text1 }),
   ], { x: nx, y: 4.05, w: 3.98, h: 2.55, margin: 0, valign: "top", isTextBox: true, objectName: "need facts" });
   s.addNotes("Coeliac disease is only the tip of the iceberg. IBS, gluten sensitivity, diabetes and kidney disease all push people towards grain-conscious diets. That is why food retail is so open to new species, new varieties and functional grain products.");
 
@@ -289,7 +290,7 @@ async function main() {
     { name: "Base year (2024/25)", labels: ["Gluten-free, global", "Gluten-free, Europe", "Plant-based meat, global"], values: [8.34, 2.72, 9.57] },
     { name: "2030 forecast", labels: ["Gluten-free, global", "Gluten-free, Europe", "Plant-based meat, global"], values: [11.78, 4.72, 21.81] },
   ], {
-    x: MX, y: 1.75, w: 7.2, h: 4.75, barDir: "col", barGapWidthPct: 60, chartColors: [HEX.tealLt, HEX.green],
+    x: MX, y: 1.75, w: 7.2, h: 4.75, barDir: "col", barGapWidthPct: 60, chartColors: [HEX.tealLt, HEX.sage],
     showValue: true, dataLabelPosition: "outEnd", dataLabelFormatCode: '"$"0.0"bn"', valAxisHidden: true, valGridLine: { style: "none" },
     showLegend: true, legendPos: "t", showTitle: true, title: "Market size, USD bn", titleFontFace: "+mn-lt", titleFontSize: 14, titleColor: HEX.ink,
     ...chartBase, valGridLine: { style: "none" }, objectName: "market size chart",
@@ -322,7 +323,7 @@ async function main() {
     const col = i % 2, row = Math.floor(i / 2);
     const x = MX + col * 6.15, y = 1.85 + row * 2.4, w = 5.95, h = 2.15;
     shadowCard(s, x, y, w, h, "why card " + (i + 1));
-    await badge(s, x + 0.3, y + 0.35, 0.8, why[i][0], C.accent1, "FFFFFF", "why badge " + (i + 1));
+    await badge(s, x + 0.3, y + 0.35, 0.8, why[i][0], C.accent1, HEX.icon, "why badge " + (i + 1));
     s.addText(why[i][1], { x: x + 1.35, y: y + 0.3, w: w - 1.6, h: 0.45, fontFace: "Cambria", fontSize: 19, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "why head " + (i + 1) });
     s.addText(why[i][2], { x: x + 1.35, y: y + 0.8, w: w - 1.6, h: 1.2, fontSize: 14, color: C.accent5, margin: 0, valign: "top", isTextBox: true, objectName: "why text " + (i + 1) });
   }
@@ -342,15 +343,15 @@ async function main() {
   for (let i = 0; i < 5; i++) {
     const x = MX + i * (cw + cg), y = 2.0;
     card(s, x, y, cw, 2.9, HEX.darkCard, "chain card " + (i + 1));
-    await badge(s, x + (cw - 0.95) / 2, y + 0.3, 0.95, chain[i][0], i === 1 ? C.accent2 : C.accent1, i === 1 ? HEX.dark : "FFFFFF", "chain badge " + (i + 1));
-    s.addText(chain[i][1], { x: x + 0.15, y: y + 1.4, w: cw - 0.3, h: 0.45, fontFace: "Cambria", fontSize: 17, bold: true, color: C.background1, align: "center", margin: 0, isTextBox: true, objectName: "chain head " + (i + 1) });
+    await badge(s, x + (cw - 0.95) / 2, y + 0.3, 0.95, chain[i][0], i === 1 ? C.accent2 : C.accent1, HEX.icon, "chain badge " + (i + 1));
+    s.addText(chain[i][1], { x: x + 0.15, y: y + 1.4, w: cw - 0.3, h: 0.45, fontFace: "Cambria", fontSize: 17, bold: true, color: C.text1, align: "center", margin: 0, isTextBox: true, objectName: "chain head " + (i + 1) });
     s.addText(chain[i][2], { x: x + 0.15, y: y + 1.88, w: cw - 0.3, h: 0.9, fontSize: 13, color: HEX.muteOnDark, align: "center", valign: "top", margin: 0, isTextBox: true, objectName: "chain text " + (i + 1) });
     if (i < 4) s.addImage({ data: await icon("FaArrowRight", HEX.gold), x: x + cw + 0.04, y: y + 1.3, w: 0.22, h: 0.22, objectName: "chain arrow " + (i + 1), altText: "arrow" });
   }
   const moat = [["Margin", "We don't pay a miller's margin on our most important input"], ["Speed", "From idea to shelf without outside suppliers"], ["Contract manufacturing", "We produce for competitors too, so the margin stays with us"]];
   for (let i = 0; i < 3; i++) {
     const x = MX + i * 4.1;
-    s.addText([T(moat[i][0], { bold: true, color: C.accent2, breakLine: true }), T(moat[i][1], { color: C.background1 })],
+    s.addText([T(moat[i][0], { bold: true, color: HEX.warmTxt, breakLine: true }), T(moat[i][1], { color: C.text1 })],
       { x, y: 5.25, w: 3.85, h: 1.05, fontSize: 14, margin: 0, valign: "top", isTextBox: true, objectName: "moat point " + (i + 1) });
   }
   s.addNotes("This is the core of the investment case. Competitors buy flour and outsource production; we own the full chain.");
@@ -404,7 +405,7 @@ async function main() {
     for (let i = 0; i < bullets.length; i++) {
       const y = 3.78 + i * 0.93;
       sl.addShape(pres.shapes.OVAL, { x: MX, y, w: 0.34, h: 0.34, fill: { color: C.accent1 }, line: { type: "none" }, objectName: "check dot " + (i + 1) });
-      sl.addImage({ data: await icon("FaCheck", HEX.white), x: MX + 0.08, y: y + 0.08, w: 0.18, h: 0.18, objectName: "check icon " + (i + 1), altText: "check" });
+      sl.addImage({ data: await icon("FaCheck", HEX.icon), x: MX + 0.08, y: y + 0.08, w: 0.18, h: 0.18, objectName: "check icon " + (i + 1), altText: "check" });
       sl.addText([T(bullets[i][0], { bold: true, color: C.text1, breakLine: true }), T(bullets[i][1], { color: C.accent5, fontSize: 13 })],
         { x: MX + 0.5, y: y - 0.04, w: 4.1, h: 0.85, fontSize: 15, margin: 0, valign: "top", isTextBox: true, objectName: "spotlight point " + (i + 1) });
     }
@@ -438,8 +439,8 @@ async function main() {
   const tr = [["100+", "products"], ["250+", "B2B resellers"], ["10+", "product categories"], ["4", "sales channels"]];
   for (let i = 0; i < 4; i++) {
     const x = MX + i * 3.08;
-    s.addText(tr[i][0], { x, y: 1.75, w: 2.85, h: 0.95, fontFace: "Cambria", fontSize: 50, bold: true, color: C.accent2, margin: 0, isTextBox: true, objectName: "traction stat " + (i + 1) });
-    s.addText(tr[i][1], { x, y: 2.68, w: 2.85, h: 0.4, fontSize: 16, color: C.background1, margin: 0, isTextBox: true, objectName: "traction label " + (i + 1) });
+    s.addText(tr[i][0], { x, y: 1.75, w: 2.85, h: 0.95, fontFace: "Cambria", fontSize: 50, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "traction stat " + (i + 1) });
+    s.addText(tr[i][1], { x, y: 2.68, w: 2.85, h: 0.4, fontSize: 16, color: C.text1, margin: 0, isTextBox: true, objectName: "traction label " + (i + 1) });
   }
   const ch = [
     ["FaStore", "Hungary · B2B", "We cover the health-food wholesalers, drugstores and organic shops. Multinational and discount chains are next."],
@@ -450,8 +451,8 @@ async function main() {
   for (let i = 0; i < 4; i++) {
     const x = MX + i * 3.08, y = 3.45, w = 2.85, h = 3.2;
     card(s, x, y, w, h, HEX.darkCard, "channel card " + (i + 1));
-    await badge(s, x + 0.25, y + 0.25, 0.65, ch[i][0], C.accent1, "FFFFFF", "channel badge " + (i + 1));
-    s.addText(ch[i][1], { x: x + 0.25, y: y + 1.05, w: w - 0.45, h: 0.4, fontSize: 16, bold: true, color: C.background1, margin: 0, isTextBox: true, objectName: "channel head " + (i + 1) });
+    await badge(s, x + 0.25, y + 0.25, 0.65, ch[i][0], C.accent1, HEX.icon, "channel badge " + (i + 1));
+    s.addText(ch[i][1], { x: x + 0.25, y: y + 1.05, w: w - 0.45, h: 0.4, fontSize: 16, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "channel head " + (i + 1) });
     s.addText(ch[i][2], { x: x + 0.25, y: y + 1.48, w: w - 0.45, h: 1.6, fontSize: 13, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "channel text " + (i + 1) });
   }
 
@@ -479,13 +480,13 @@ async function main() {
   const mp = await logo("image56.png", 7.6, 4.9);
   s.addImage({ data: mp.data, x: MX, y: 1.75 + (4.9 - mp.h) / 2, w: mp.w, h: mp.h, objectName: "world map", altText: "World map highlighting current and target export markets" });
   const fp = [
-    ["FaLandmark", C.accent3, "Home market", "Hungary", "Our widest coverage: organic, health-food, drugstore and retail chains."],
+    ["FaLandmark", C.accent4, "Home market", "Hungary", "Our widest coverage: organic, health-food, drugstore and retail chains."],
     ["FaPlaneDeparture", C.accent1, "Exporting today", "UK · Western Europe · Saudi Arabia", "Distributors, Amazon and a first industrial-scale GF bakery in KSA."],
     ["FaRocket", C.accent2, "Next markets", "USA · Canada · GCC (MENA)", "Plus deeper B2B and DTC reach in Western Europe."],
   ];
   for (let i = 0; i < 3; i++) {
     const y = 1.85 + i * 1.6;
-    await badge(s, 8.55, y, 0.65, fp[i][0], fp[i][1], i === 2 ? HEX.dark : "FFFFFF", "footprint badge " + (i + 1));
+    await badge(s, 8.55, y, 0.65, fp[i][0], fp[i][1], HEX.icon, "footprint badge " + (i + 1));
     s.addText([T(fp[i][2].toUpperCase(), { fontSize: 11, bold: true, color: C.accent5, charSpacing: 2, breakLine: true }), T(fp[i][3], { fontSize: 16, bold: true, color: C.text1, breakLine: true }), T(fp[i][4], { fontSize: 12, color: C.accent5 })],
       { x: 9.4, y: y - 0.05, w: 3.35, h: 1.45, margin: 0, valign: "top", isTextBox: true, objectName: "footprint text " + (i + 1) });
   }
@@ -499,7 +500,7 @@ async function main() {
     { name: "2025", labels: cats, values: [150, 200, 160, 150, 50] },
     { name: "2026 plan", labels: cats, values: [200, 250, 200, 350, 80] },
   ], {
-    x: MX, y: 1.75, w: 8.1, h: 4.85, barDir: "col", barGapWidthPct: 55, chartColors: [HEX.line, HEX.tealLt, HEX.green],
+    x: MX, y: 1.75, w: 8.1, h: 4.85, barDir: "col", barGapWidthPct: 55, chartColors: [HEX.line, HEX.tealLt, HEX.sage],
     showValue: true, dataLabelPosition: "outEnd", showLegend: true, legendPos: "t", valAxisHidden: true,
     showTitle: true, title: "Sales by category, HUF million", titleFontFace: "+mn-lt", titleFontSize: 14, titleColor: HEX.ink,
     ...chartBase, valGridLine: { style: "none" }, dataLabelFontSize: 10, objectName: "category sales chart",
@@ -519,13 +520,13 @@ async function main() {
   s.addImage({ data: await photo("image68.jpg", 2.6, 2.37, { position: "north" }), x: MX + 2.72, y: 4.23, w: 2.6, h: 2.37, objectName: "KSA site photo", altText: "Site visit in Saudi Arabia" });
   const ksa = [["A first", "The first Hungarian company to export to KSA's first industrial-scale gluten-free bakery."], ["State-backed demand", "The Saudi state is the end buyer. Volumes are predictable and payment risk is low."], ["A gateway", "We aim to bring the partnership to Europe within 2–3 years."]];
   for (let i = 0; i < 3; i++) {
-    s.addText([T(ksa[i][0], { bold: true, color: C.accent2, breakLine: true }), T(ksa[i][1], { color: C.background1 })],
+    s.addText([T(ksa[i][0], { bold: true, color: HEX.warmTxt, breakLine: true }), T(ksa[i][1], { color: C.text1 })],
       { x: 6.2, y: 1.8 + i * 0.92, w: 6.5, h: 0.85, fontSize: 14, margin: 0, valign: "top", isTextBox: true, objectName: "ksa point " + (i + 1) });
   }
   s.addChart(pres.charts.BAR, [{ name: "Export potential, EUR M", labels: ["Last 12 months", "2025", "2026", "2027"], values: [0.2, 0.4, 1.0, 1.5] }], {
     x: 6.1, y: 4.55, w: 6.6, h: 2.15, barDir: "col", barGapWidthPct: 45, chartColors: [HEX.gold], showValue: true, dataLabelPosition: "outEnd",
     dataLabelFormatCode: '"€"0.0"M"', valAxisHidden: true, showLegend: false,
-    ...chartBase, valGridLine: { style: "none" }, catAxisLabelColor: HEX.muteOnDark, dataLabelColor: HEX.white, objectName: "KSA export chart",
+    ...chartBase, valGridLine: { style: "none" }, catAxisLabelColor: HEX.grey, dataLabelColor: HEX.ink, objectName: "KSA export chart",
   });
 
   // ======================= 24. NOPEX =======================
@@ -539,13 +540,13 @@ async function main() {
   pres.addSection({ title: "Competition" });
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "Competition" });
   heads(s, "05 · Competition", "Only one player owns the whole chain");
-  const hdr = (t) => ({ text: t, options: { bold: true, color: C.background1, fill: { color: C.text2 }, align: "center", valign: "middle", fontSize: 12 } });
+  const hdr = (t) => ({ text: t, options: { bold: true, color: C.text1, fill: { color: C.accent4 }, align: "center", valign: "middle", fontSize: 12 } });
   const yes = { text: "●", options: { color: C.accent3, align: "center", fontSize: 18 } };
   const no = { text: "○", options: { color: C.accent5, align: "center", fontSize: 18 } };
-  const part = { text: "◐", options: { color: C.accent2, align: "center", fontSize: 18 } };
+  const part = { text: "◐", options: { color: HEX.warmTxt, align: "center", fontSize: 18 } };
   const rowL = (t) => ({ text: t, options: { bold: true, color: C.text1, fontSize: 13, valign: "middle" } });
   const rows = [
-    [{ text: "", options: { fill: { color: C.text2 } } }, hdr("Naturtrade"), hdr("Szafi Products"), hdr("Hunorganic (It's Us)"), hdr("Import brands")],
+    [{ text: "", options: { fill: { color: C.accent4 } } }, hdr("Naturtrade"), hdr("Szafi Products"), hdr("Hunorganic (It's Us)"), hdr("Import brands")],
     [rowL("Own flour milling"), yes, no, no, no],
     [rowL("Own production"), yes, part, part, yes],
     [rowL("Healthy instant (cups)"), yes, no, no, part],
@@ -573,9 +574,9 @@ async function main() {
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "Competition" });
   heads(s, "05 · SWOT", "Clear strengths, known risks, a plan for both");
   const swot = [
-    ["S", "Strengths", C.accent3, "FFFFFF", ["Our own premium milled flour", "Constant R&D-driven product innovation", "Contract manufacturing for competitors"]],
-    ["W", "Weaknesses", C.accent5, "FFFFFF", ["Undercapitalised, like most Hungarian SMEs", "Smaller marketing budget than Western peers", "Export growth held back by capacity"]],
-    ["O", "Opportunities", C.accent1, "FFFFFF", ["Contract manufacturing: a HUF 1.2bn opportunity", "Export: a HUF 2.1bn opportunity", "Western Europe, North America, Middle East"]],
+    ["S", "Strengths", C.accent1, "FFFFFF", ["Our own premium milled flour", "Constant R&D-driven product innovation", "Contract manufacturing for competitors"]],
+    ["W", "Weaknesses", HEX.line, "FFFFFF", ["Undercapitalised, like most Hungarian SMEs", "Smaller marketing budget than Western peers", "Export growth held back by capacity"]],
+    ["O", "Opportunities", C.accent2, "FFFFFF", ["Contract manufacturing: a HUF 1.2bn opportunity", "Export: a HUF 2.1bn opportunity", "Western Europe, North America, Middle East"]],
     ["T", "Threats", C.accent6, "FFFFFF", ["Unpredictable regulation: special taxes, price and margin caps", "Competition", "Global shocks: tariffs, Covid, the war in Ukraine"]],
   ];
   for (let i = 0; i < 4; i++) {
@@ -600,9 +601,9 @@ async function main() {
   for (let i = 0; i < 2; i++) {
     const x = MX + i * 6.15, y = 1.9, w = 5.95, h = 4.6;
     card(s, x, y, w, h, HEX.darkCard, "lever card " + (i + 1));
-    await badge(s, x + 0.4, y + 0.4, 0.95, lev[i][0], i ? C.accent1 : C.accent2, i ? "FFFFFF" : HEX.dark, "lever badge " + (i + 1));
-    s.addText(lev[i][1], { x: x + 0.4, y: y + 1.6, w: w - 0.8, h: 1.0, fontFace: "Cambria", fontSize: 50, bold: true, color: i ? C.accent4 : C.accent2, margin: 0, isTextBox: true, objectName: "lever stat " + (i + 1) });
-    s.addText(lev[i][2], { x: x + 0.4, y: y + 2.6, w: w - 0.8, h: 0.45, fontSize: 20, bold: true, color: C.background1, margin: 0, isTextBox: true, objectName: "lever head " + (i + 1) });
+    await badge(s, x + 0.4, y + 0.4, 0.95, lev[i][0], i ? C.accent1 : C.accent2, HEX.icon, "lever badge " + (i + 1));
+    s.addText(lev[i][1], { x: x + 0.4, y: y + 1.6, w: w - 0.8, h: 1.0, fontFace: "Cambria", fontSize: 50, bold: true, color: i ? C.accent3 : HEX.warmTxt, margin: 0, isTextBox: true, objectName: "lever stat " + (i + 1) });
+    s.addText(lev[i][2], { x: x + 0.4, y: y + 2.6, w: w - 0.8, h: 0.45, fontSize: 20, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "lever head " + (i + 1) });
     s.addText(lev[i][3], { x: x + 0.4, y: y + 3.1, w: w - 0.8, h: 1.3, fontSize: 14, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "lever text " + (i + 1) });
   }
 
@@ -611,14 +612,14 @@ async function main() {
   s = pres.addSlide({ masterName: "CONTENT_LIGHT", sectionTitle: "The investment" });
   heads(s, "06 · The ask", "HUF 400M+ to move into a scalable plant");
   s.addChart(pres.charts.DOUGHNUT, [{ name: "Use of funds", labels: ["Greenfield plant", "Inventory & marketing", "ÉLIP grant co-financing"], values: [200, 130, 90] }], {
-    x: MX, y: 1.75, w: 4.9, h: 4.6, holeSize: 62, chartColors: [HEX.green, HEX.gold, HEX.teal], showPercent: false, showValue: true,
-    dataLabelFormatCode: '0"M"', dataLabelColor: HEX.white, dataLabelFontSize: 13, dataLabelFontFace: "+mn-lt", dataLabelFontBold: true,
+    x: MX, y: 1.75, w: 4.9, h: 4.6, holeSize: 62, chartColors: [HEX.sage, HEX.gold, HEX.teal], showPercent: false, showValue: true,
+    dataLabelFormatCode: '0"M"', dataLabelColor: HEX.ink, dataLabelFontSize: 13, dataLabelFontFace: "+mn-lt", dataLabelFontBold: true,
     showLegend: false, objectName: "use of funds chart",
   });
   s.addText([T("HUF", { fontSize: 14, color: C.accent5, breakLine: true }), T("420M", { fontFace: "Cambria", fontSize: 30, bold: true, color: C.text1, breakLine: true }), T("indicative plan", { fontSize: 11, color: C.accent5 })],
     { x: MX + 1.45, y: 3.25, w: 2.0, h: 1.4, align: "center", valign: "middle", margin: 0, isTextBox: true, objectName: "doughnut centre" });
   const uof = [
-    [HEX.green, "Greenfield plant · HUF 200M", "Relocation to Röszke (5 minutes by car): concrete base, road, fence and utilities, plus a rented production hall and offices"],
+    [HEX.sage, "Greenfield plant · HUF 200M", "Relocation to Röszke (5 minutes by car): concrete base, road, fence and utilities, plus a rented production hall and offices"],
     [HEX.gold, "Inventory & marketing · HUF 130M", "Raw and packaging stock, Cupster and Oosty launch campaigns, export trade shows, webshop"],
     [HEX.teal, "Grant co-financing · HUF 90M", "Own contribution to our winning ÉLIP capacity-expansion grant: new machines and accessories"],
   ];
@@ -645,7 +646,7 @@ async function main() {
     shadowCard(s, x, y, w, 1.42, "capacity card " + (i + 1));
     s.addText([T(capa[i][0], { bold: true, fontSize: 16, color: C.text1, breakLine: true }), T(capa[i][5], { fontSize: 12, color: C.accent5 })],
       { x: x + 0.25, y: y + 0.15, w: 2.6, h: 1.15, margin: 0, valign: "middle", isTextBox: true, objectName: "capacity label " + (i + 1) });
-    s.addText([T(capa[i][1], { fontSize: 18, color: C.accent5, bold: true }), T("   →   ", { fontSize: 16, color: C.accent2, bold: true }), T(capa[i][2], { fontSize: 18, color: C.text1, bold: true, breakLine: true }), T(capa[i][3], { fontSize: 11, color: C.accent5 })],
+    s.addText([T(capa[i][1], { fontSize: 18, color: C.accent5, bold: true }), T("   →   ", { fontSize: 16, color: HEX.warmTxt, bold: true }), T(capa[i][2], { fontSize: 18, color: C.text1, bold: true, breakLine: true }), T(capa[i][3], { fontSize: 11, color: C.accent5 })],
       { x: x + 2.95, y: y + 0.15, w: 2.6, h: 1.15, margin: 0, valign: "middle", isTextBox: true, objectName: "capacity values " + (i + 1) });
     s.addText(capa[i][4], { x: x + 5.6, y: y + 0.15, w: 1.45, h: 1.15, fontFace: "Cambria", fontSize: 30, bold: true, color: C.accent3, align: "right", margin: 0, valign: "middle", isTextBox: true, objectName: "capacity multiple " + (i + 1) });
   }
@@ -665,8 +666,8 @@ async function main() {
   s.addShape(pres.shapes.LINE, { x: MX + 0.3, y: ry + 0.3, w: 11.5, h: 0, line: { color: HEX.line, width: 3 }, objectName: "roadmap line" });
   for (let i = 0; i < 5; i++) {
     const x = MX + i * (rw + rg);
-    numBadge(s, x + 0.05, ry, 0.6, i + 1, i === 4 ? C.accent2 : C.accent1, i === 4 ? C.text2 : C.background1);
-    s.addText(road[i][0], { x, y: 1.75, w: rw, h: 0.6, fontFace: "Cambria", fontSize: 26, bold: true, color: i === 4 ? C.accent2 : C.accent3, margin: 0, isTextBox: true, objectName: "roadmap year " + (i + 1) });
+    numBadge(s, x + 0.05, ry, 0.6, i + 1, i === 4 ? C.accent2 : C.accent1, C.text2);
+    s.addText(road[i][0], { x, y: 1.75, w: rw, h: 0.6, fontFace: "Cambria", fontSize: 26, bold: true, color: i === 4 ? HEX.warmTxt : C.accent3, margin: 0, isTextBox: true, objectName: "roadmap year " + (i + 1) });
     shadowCard(s, x, 3.45, rw, 2.75, "roadmap card " + (i + 1));
     s.addText(road[i][1], { x: x + 0.2, y: 3.6, w: rw - 0.4, h: 0.45, fontSize: 17, bold: true, color: C.text1, margin: 0, isTextBox: true, objectName: "roadmap phase " + (i + 1) });
     s.addText(road[i][2].map((t, k) => T(t, { bullet: true, breakLine: k < road[i][2].length - 1 })),
@@ -681,9 +682,9 @@ async function main() {
     { type: pres.charts.BAR, data: [
       { name: "Net revenue (HUF M)", labels: yrs, values: [732.0, 873.4, 1121.5, 1468.4, 1915.5, 2514.1] },
       { name: "EBITDA (HUF M)", labels: yrs, values: [181.5, 201.4, 208.3, 320.1, 377.2, 524.8] },
-    ], options: { chartColors: [HEX.green, HEX.gold], barGapWidthPct: 45 } },
+    ], options: { chartColors: [HEX.sage, HEX.gold], barGapWidthPct: 45 } },
     { type: pres.charts.LINE, data: [{ name: "EBITDA margin", labels: yrs, values: [0.248, 0.231, 0.186, 0.218, 0.197, 0.209] }],
-      options: { chartColors: [HEX.teal], lineSize: 3, lineDataSymbol: "circle", lineDataSymbolSize: 8, secondaryValAxis: true, secondaryCatAxis: true } },
+      options: { chartColors: [HEX.green], lineSize: 3, lineDataSymbol: "circle", lineDataSymbolSize: 8, secondaryValAxis: true, secondaryCatAxis: true } },
   ], {
     x: MX, y: 1.7, w: 8.4, h: 4.95, showLegend: true, legendPos: "t", ...chartBase,
     valAxes: [{ showValAxisTitle: false, valAxisMinVal: 0, valAxisMaxVal: 3000, valAxisLabelFormatCode: "#,##0", valAxisLabelColor: HEX.grey, valGridLine: { color: "E3EAE8", size: 0.75 } },
@@ -704,8 +705,8 @@ async function main() {
   // ======================= 32. EXIT =======================
   s = pres.addSlide({ masterName: "CONTENT_DARK", sectionTitle: "The investment" });
   heads(s, "06 · Exit", "A clear path to a 2030 exit");
-  s.addText("3–5×", { x: MX, y: 1.9, w: 5.4, h: 1.9, fontFace: "Cambria", fontSize: 110, bold: true, color: C.accent2, margin: 0, isTextBox: true, objectName: "exit multiple" });
-  s.addText("Target return to investors in 5 years", { x: MX, y: 3.85, w: 5.4, h: 0.5, fontSize: 20, color: C.background1, margin: 0, isTextBox: true, objectName: "exit multiple label" });
+  s.addText("3–5×", { x: MX, y: 1.9, w: 5.4, h: 1.9, fontFace: "Cambria", fontSize: 110, bold: true, color: HEX.warmTxt, margin: 0, isTextBox: true, objectName: "exit multiple" });
+  s.addText("Target return to investors in 5 years", { x: MX, y: 3.85, w: 5.4, h: 0.5, fontSize: 20, color: C.text1, margin: 0, isTextBox: true, objectName: "exit multiple label" });
   s.addText("The value drivers are scale from the Röszke plant, export share, high-margin DTC, Cupster and Oosty growth, and contract manufacturing.", { x: MX, y: 4.5, w: 5.2, h: 1.3, fontSize: 14, color: HEX.muteOnDark, margin: 0, valign: "top", isTextBox: true, objectName: "exit drivers" });
   const ex = [
     ["FaLandmark", "Financial investor", "A sale to an international financial investor such as a PE fund or food-platform roll-up."],
@@ -714,8 +715,8 @@ async function main() {
   for (let i = 0; i < 2; i++) {
     const y = 1.9 + i * 2.35;
     card(s, 6.6, y, 6.13, 2.1, HEX.darkCard, "exit card " + (i + 1));
-    await badge(s, 6.9, y + 0.35, 0.8, ex[i][0], C.accent1, "FFFFFF", "exit badge " + (i + 1));
-    s.addText([T(ex[i][1], { bold: true, fontSize: 19, color: C.background1, breakLine: true }), T(ex[i][2], { fontSize: 14, color: HEX.muteOnDark })],
+    await badge(s, 6.9, y + 0.35, 0.8, ex[i][0], C.accent1, HEX.icon, "exit badge " + (i + 1));
+    s.addText([T(ex[i][1], { bold: true, fontSize: 19, color: C.text1, breakLine: true }), T(ex[i][2], { fontSize: 14, color: HEX.muteOnDark })],
       { x: 7.95, y: y + 0.25, w: 4.6, h: 1.65, margin: 0, valign: "top", isTextBox: true, objectName: "exit text " + (i + 1) });
   }
 
@@ -732,7 +733,7 @@ async function main() {
   ];
   for (let i = 0; i < 5; i++) {
     const y = 1.8 + i * 0.97;
-    await badge(s, MX, y + 0.05, 0.65, wi[i][0], i % 2 ? C.accent3 : C.accent1, "FFFFFF", "invest badge " + (i + 1));
+    await badge(s, MX, y + 0.05, 0.65, wi[i][0], i % 2 ? C.accent2 : C.accent1, HEX.icon, "invest badge " + (i + 1));
     s.addText([T(wi[i][1], { bold: true, fontSize: 16, color: C.text1, breakLine: true }), T(wi[i][2], { fontSize: 13, color: C.accent5 })],
       { x: MX + 0.9, y, w: 6.6, h: 0.85, margin: 0, valign: "middle", isTextBox: true, objectName: "invest reason " + (i + 1) });
   }
@@ -740,14 +741,14 @@ async function main() {
   // ======================= 34. THANK YOU =======================
   s = pres.addSlide({ masterName: "COVER_DARK", sectionTitle: "The investment" });
   s.addImage({ data: await photo("image26.jpg", 5.6, 7.5), x: W - 5.6, y: 0, w: 5.6, h: 7.5, objectName: "closing photo", altText: "Cupster instant soup range" });
-  s.addText("THANK YOU", { x: MX + 0.1, y: 1.4, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent4, charSpacing: 4, margin: 0, isTextBox: true, objectName: "closing eyebrow" });
-  s.addText("Let's grow it together.", { x: MX + 0.1, y: 1.85, w: 7, h: 1.6, fontFace: "Cambria", fontSize: 48, bold: true, color: C.background1, margin: 0, valign: "top", isTextBox: true, objectName: "closing title" });
+  s.addText("THANK YOU", { x: MX + 0.1, y: 1.4, w: 6.8, h: 0.35, fontSize: 13, bold: true, color: C.accent3, charSpacing: 4, margin: 0, isTextBox: true, objectName: "closing eyebrow" });
+  s.addText("Let's grow it together.", { x: MX + 0.1, y: 1.85, w: 7, h: 1.6, fontFace: "Cambria", fontSize: 48, bold: true, color: C.text1, margin: 0, valign: "top", isTextBox: true, objectName: "closing title" });
   s.addText([
-    T("Miklós Véha", { bold: true, color: C.background1, fontSize: 18, breakLine: true }),
+    T("Miklós Véha", { bold: true, color: C.text1, fontSize: 18, breakLine: true }),
     T("Founder & CEO, Naturtrade Hungary Kft.", { color: HEX.muteOnDark, fontSize: 14, breakLine: true }),
     T(" ", { fontSize: 8, breakLine: true }),
-    T("miklos.veha@naturtrade.hu", { color: C.accent2, fontSize: 15, breakLine: true }),
-    T("+36 30 637 4535", { color: C.accent2, fontSize: 15, breakLine: true }),
+    T("miklos.veha@naturtrade.hu", { color: HEX.warmTxt, fontSize: 15, breakLine: true }),
+    T("+36 30 637 4535", { color: HEX.warmTxt, fontSize: 15, breakLine: true }),
     T("millandfolks.com  ·  edenpremium.hu", { color: HEX.muteOnDark, fontSize: 14 }),
   ], { x: MX + 0.1, y: 3.7, w: 6.5, h: 2.2, margin: 0, valign: "top", isTextBox: true, objectName: "contact" });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: MX + 0.1, y: 6.0, w: 0.95, h: 0.95, rectRadius: 0.08, fill: { color: C.background1 }, line: { type: "none" }, objectName: "closing logo tile" });
