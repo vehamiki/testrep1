@@ -28,9 +28,13 @@ FONT = "Carlito"
 PRICE = 40_000.00
 DOWN = PRICE * 0.10
 FIN = PRICE - DOWN
-FACTOR = 0.019540  # havi díj / finanszírozott összeg, 60 hó (a két korábbi ajánlatból)
-MONTHLY = round(FIN * FACTOR, 2)
-INTEREST = round(MONTHLY * 60 - FIN)
+TERM = 36  # hónap
+# Effektív éves kamat a két korábbi 60 hónapos ajánlatból visszaszámolva
+# (havi díj / finanszírozott összeg = 0,019540  ->  kb. 6,444% annuitás).
+EFF_RATE = 0.06444
+_r = EFF_RATE / 12
+MONTHLY = round(FIN * _r / (1 - (1 + _r) ** -TERM), 2)
+INTEREST = round(MONTHLY * TERM - FIN)
 FX = 390
 
 
@@ -346,7 +350,7 @@ table(
         ["Szállító / ajánlat",
          "Brio Kft. (Békésszentandrás), ajánlat száma 28-26, kelte 2026.10.28., érvényes 30 napig. "
          "Paritás: vevő telephelye; a csomagolást, szállítást, telepítést és beüzemelést az ár tartalmazza."],
-        ["Nettó ár / finanszírozás", f"{huf(PRICE)} EUR / {huf(FIN)} EUR, 60 hó"],
+        ["Nettó ár / finanszírozás", f"{huf(PRICE)} EUR / {huf(FIN)} EUR, {TERM} hó"],
         ["Havi díj", f"{huf(MONTHLY, 2)} EUR"],
         ["Felhasználás",
          "Gluténmentes tészták folyamatos, gépi gyártása (préselés, formázás a cserélhető matricákkal, vágás, "
@@ -372,7 +376,7 @@ table(
         ["Nettó beszerzési ár", huf(PRICE)],
         ["Önerő (10%, nettó)", huf(DOWN)],
         ["Finanszírozott összeg", huf(FIN)],
-        ["Futamidő / kamat", "60 hó / 3,37% fix"],
+        ["Futamidő / kamat", f"{TERM} hó / 3,37% fix"],
         ["Havi díj", huf(MONTHLY, 2)],
         ["Összes kamat a futamidő alatt", huf(INTEREST)],
     ],
@@ -388,7 +392,7 @@ rich(
          f"({FX} Ft/EUR árfolyamon). Óvatosan, a liszt átlagos 200 Ft/kg-os nettó árrésével számolva már heti "
          "1 tonna többlet gluténmentes tészta évi kb. 10 M Ft fedezetet termel; a tészta árrése ennél magasabb, "
          "mert a saját liszt feldolgozott formában kerül értékesítésre. A beruházás így várhatóan kb. 1,5–2 év "
-         "alatt megtérül, a lízingdíjat pedig a többletfedezet többszörösen fedezi. A lízingdíjat EUR-ban "
+         "alatt megtérül, a többletfedezet pedig már a futamidő alatt is kb. kétszeresen fedezi a lízingdíjat. A lízingdíjat EUR-ban "
          "fizetjük, és EUR-alapú exportbevételünk ennek sokszorosát fedezi, így árfolyamkockázatunk nincs. "
          f"A 10%-os önerőt ({huf(DOWN)} EUR + ÁFA) saját forrásból biztosítjuk.", False),
     ],
@@ -508,7 +512,7 @@ table(
         ["Devizafedezet", "53%-os, EUR-alapú exportbevétel az EUR-alapú lízingdíjjal szemben"],
         ["Biztosítéki érték",
          f"komplett ipari tésztagyártó gépsor, {huf(PRICE)} EUR nettó értékben; elterjedt típus aktív "
-         "használtgép-piaccal, egységei külön is értékesíthetők; 5 éves futamidő"],
+         "használtgép-piaccal, egységei külön is értékesíthetők; 3 éves futamidő"],
     ],
     [Cm(4.6), Cm(12.6)], size=9,
 )
