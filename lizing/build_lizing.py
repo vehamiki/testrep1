@@ -376,7 +376,7 @@ table(
         ["Nettó beszerzési ár", huf(PRICE)],
         ["Önerő (10%, nettó)", huf(DOWN)],
         ["Finanszírozott összeg", huf(FIN)],
-        ["Futamidő / kamat", f"{TERM} hó / 3,37% fix"],
+        ["Futamidő / kamat", f"{TERM} hó / {huf(EFF_RATE * 100, 2)}% fix"],
         ["Havi díj", huf(MONTHLY, 2)],
         ["Összes kamat a futamidő alatt", huf(INTEREST)],
     ],
